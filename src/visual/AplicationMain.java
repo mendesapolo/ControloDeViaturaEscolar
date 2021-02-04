@@ -33,11 +33,11 @@ public class AplicationMain extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jButton7 = new javax.swing.JButton();
         btnViaturaMn = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnMotoristaMn = new javax.swing.JButton();
         btnFuncionarioMn = new javax.swing.JButton();
         btnManutencaoMn = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btnControloViaturaMn = new javax.swing.JButton();
+        btnUsuarioMn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -93,12 +93,12 @@ public class AplicationMain extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(190, 234, 214));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jButton2.setText("MOTORISTA");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnMotoristaMn.setBackground(new java.awt.Color(190, 234, 214));
+        btnMotoristaMn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        btnMotoristaMn.setText("MOTORISTA");
+        btnMotoristaMn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnMotoristaMnActionPerformed(evt);
             }
         });
 
@@ -120,18 +120,23 @@ public class AplicationMain extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setBackground(new java.awt.Color(190, 234, 214));
-        jButton5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jButton5.setText("CONTROLO");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnControloViaturaMn.setBackground(new java.awt.Color(190, 234, 214));
+        btnControloViaturaMn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        btnControloViaturaMn.setText("CONTROLO");
+        btnControloViaturaMn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnControloViaturaMnActionPerformed(evt);
             }
         });
 
-        jButton6.setBackground(new java.awt.Color(190, 234, 214));
-        jButton6.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jButton6.setText("USUÁRIO");
+        btnUsuarioMn.setBackground(new java.awt.Color(190, 234, 214));
+        btnUsuarioMn.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        btnUsuarioMn.setText("USUÁRIO");
+        btnUsuarioMn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsuarioMnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -145,12 +150,12 @@ public class AplicationMain extends javax.swing.JFrame {
                     .addComponent(btnFuncionarioMn, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnUsuarioMn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnViaturaMn, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnControloViaturaMn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMotoristaMn, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(141, 141, 141))
         );
         jPanel1Layout.setVerticalGroup(
@@ -160,11 +165,11 @@ public class AplicationMain extends javax.swing.JFrame {
                 .addGap(76, 76, 76)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnControloViaturaMn, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnUsuarioMn, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnMotoristaMn, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnManutencaoMn, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -202,20 +207,25 @@ public class AplicationMain extends javax.swing.JFrame {
         ff.setVisible(true);
     }//GEN-LAST:event_btnFuncionarioMnActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnMotoristaMnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotoristaMnActionPerformed
         MotoristaFrm mf = new MotoristaFrm(this, true);
         mf.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnMotoristaMnActionPerformed
 
     private void btnManutencaoMnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManutencaoMnActionPerformed
         ManutencaoFrm mtf = new ManutencaoFrm(this, true);
         mtf.setVisible(true);
     }//GEN-LAST:event_btnManutencaoMnActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btnControloViaturaMnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnControloViaturaMnActionPerformed
         ControloViaturaFrm cvf = new ControloViaturaFrm(this, true);
         cvf.setVisible(true);
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btnControloViaturaMnActionPerformed
+
+    private void btnUsuarioMnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioMnActionPerformed
+        UsuarioFrm usf = new UsuarioFrm(this, true);
+        usf.setVisible(true);
+    }//GEN-LAST:event_btnUsuarioMnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -253,12 +263,12 @@ public class AplicationMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnControloViaturaMn;
     private javax.swing.JButton btnFuncionarioMn;
     private javax.swing.JButton btnManutencaoMn;
+    private javax.swing.JButton btnMotoristaMn;
+    private javax.swing.JButton btnUsuarioMn;
     private javax.swing.JButton btnViaturaMn;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

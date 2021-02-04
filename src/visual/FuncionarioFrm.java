@@ -254,11 +254,11 @@ public class FuncionarioFrm extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        if(!"Novo".equals(txtId.getText())){
+        if(!"Novo".equalsIgnoreCase(txtId.getText())){
             if(!txtBi.getText().equals("") && !txtTelefone.getText().equals("") && !txtNome.getText().equals("")){
                 Pessoa p = new Pessoa(Integer.parseInt(txtId.getText()),txtNome.getText(), txtBi.getText(), txtTelefone.getText(), "funcionario");
                 if(PessoaDao.updade(p)){
-                    JOptionPane.showMessageDialog(this, "Registado com Sucesso","Sucesso", 1);
+                    JOptionPane.showMessageDialog(this, "Atualizado com Sucesso", "Sucesso", 1);
                     refreshTb();
                     novo();
                 }else{

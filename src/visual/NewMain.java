@@ -21,7 +21,7 @@ public class NewMain {
     public static void main(String[] args) {
         
         for(ControloViatura cv : ControloViaturaDao.findAll()){
-            System.out.println("Data: "+(new SimpleDateFormat("dd/M/yyyy").format(cv.getEntrada())));
+            System.out.println("Data: "+(new SimpleDateFormat("dd/M/yyyy h:mm").format(cv.getEntrada())));
         }
     }
     

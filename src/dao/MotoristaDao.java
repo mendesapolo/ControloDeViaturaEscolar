@@ -98,12 +98,12 @@ public class MotoristaDao{
         return false;
     }
 
-    public static boolean delete(Viatura viatura) {
-        if (viatura != null) {
+    public static boolean delete(Motorista motorista) {
+        if (motorista != null) {
             try {
                 Connection con = Conexao.getConexao();
-                PreparedStatement stmt = con.prepareStatement("DELETE FROM viatura WHERE id = ?");
-                stmt.setInt(1, viatura.getId());
+                PreparedStatement stmt = con.prepareStatement("DELETE FROM motorista WHERE id = ?");
+                stmt.setInt(1, motorista.getId());
                 stmt.addBatch();
                 stmt.executeUpdate();
 //            Conexao.closeStmt(con, stmt);

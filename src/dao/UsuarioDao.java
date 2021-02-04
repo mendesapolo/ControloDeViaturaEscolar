@@ -109,4 +109,24 @@ public class UsuarioDao{
         return false;
     }
     
+    public static Usuario login(String us, String senha) {
+        if (us != null && senha != null) {
+            try {
+                Connection con = Conexao.getConexao();
+                String sql = "SELECT * FROM usuario WHERE username = '"+us+"' AND senha = '"+senha+"'";
+                PreparedStatement stmt = con.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery();
+                rs.next();
+                Usuario u = new Usuario(rs.getInt(1), rs.getString(2), rs.getString(3));
+                
+//            Conexao.closeStmt(con, stmt);
+
+                return u;
+            } catch (Exception ex) {
+                System.err.println("Erro no Login do Usuario: " + ex.getMessage());
+            }
+        }
+        return null;
+    }
+    
 }

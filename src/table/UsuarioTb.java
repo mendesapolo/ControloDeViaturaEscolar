@@ -5,8 +5,8 @@
  */
 package table;
 
-import classe.ControloViatura;
-import java.text.SimpleDateFormat;
+import classe.Usuario;
+import classe.Viatura;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -14,16 +14,16 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author António Apolo
  */
-public class ControloViaturaTb extends AbstractTableModel{
+public class UsuarioTb extends AbstractTableModel{
     
-    private List<ControloViatura> lista;
-    private final String[] header = new String[]{"ID","MODELO","MATRÍCULA", "ENTRADA", "SAIDA"};
+    private List<Usuario> lista;
+    private final String[] header = new String[]{"ID", "NOME DE USUÁRIO", "SENHA/PALAVRA-PASSE"};
 
-    public List<ControloViatura> getLista() {
+    public List<Usuario> getLista() {
         return lista;
     }
 
-    public void setLista(List<ControloViatura> lista) {
+    public void setLista(List<Usuario> lista) {
         this.lista = lista;
         this.fireTableDataChanged();
     }
@@ -47,16 +47,13 @@ public class ControloViaturaTb extends AbstractTableModel{
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
             case 0: return this.lista.get(rowIndex).getId();
-            case 1: return this.lista.get(rowIndex).getViatura().getModelo();
-            case 2: return this.lista.get(rowIndex).getViatura().getMatricula();
-            case 3: return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(this.lista.get(rowIndex).getEntrada());
-            case 4: return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(this.lista.get(rowIndex).getSaida());
+            case 1: return this.lista.get(rowIndex).getUserName();
+            case 2: return this.lista.get(rowIndex).getSenha();
             default:return "--------";
         }
     }
     
-    public ControloViatura getRow(int ps){
+    public Usuario getRow(int ps){
         return this.lista.get(ps);
     }
-    
 }

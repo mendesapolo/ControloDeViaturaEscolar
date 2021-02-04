@@ -5,33 +5,32 @@
  */
 package visual;
 
-import classe.Viatura;
-import dao.ViaturaDao;
+import classe.Usuario;
+import dao.UsuarioDao;
 import javax.swing.JOptionPane;
-import table.ViaturaTb;
+import table.UsuarioTb;
 
 /**
  *
  * @author António Apolo
  */
-public class ViaturaFrm extends javax.swing.JDialog {
+public class UsuarioFrm extends javax.swing.JDialog {
 
-    private final ViaturaTb modelo;
-
+    private final UsuarioTb modelo;
+    
     /**
-     * Creates new form ViaturaFrm
-     *
+     * Creates new form FuncionarioFrm
      * @param parent
      * @param modal
      */
-    public ViaturaFrm(java.awt.Frame parent, boolean modal) {
+    public UsuarioFrm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-
-        this.modelo = new ViaturaTb();
-        this.modelo.setLista(ViaturaDao.findAll());
+        
+        this.modelo = new UsuarioTb();
+        refreshTb();
         this.tableData.setModel(modelo);
-
+        
         novo();
     }
 
@@ -47,26 +46,27 @@ public class ViaturaFrm extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tableData = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        jSeparator1 = new javax.swing.JSeparator();
         btnRegistar = new javax.swing.JButton();
         btnAtualizar = new javax.swing.JButton();
         btnNovo = new javax.swing.JButton();
-        txtMarca = new javax.swing.JTextField();
-        txtModelo = new javax.swing.JTextField();
-        txtMatricula = new javax.swing.JTextField();
-        txtTipo = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        txtUsername = new javax.swing.JTextField();
+        lblSenha = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtId = new javax.swing.JLabel();
+        txtSenha = new javax.swing.JPasswordField();
+        txtSenha1 = new javax.swing.JPasswordField();
+        lblSenha1 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Viatura Painel");
 
         tableData.setBackground(new java.awt.Color(181, 244, 181));
+        tableData.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         tableData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -86,10 +86,6 @@ public class ViaturaFrm extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tableData);
 
         jPanel1.setBackground(new java.awt.Color(224, 243, 230));
-
-        jSeparator1.setBackground(new java.awt.Color(0, 102, 51));
-        jSeparator1.setForeground(new java.awt.Color(0, 102, 51));
-        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         btnRegistar.setBackground(new java.awt.Color(0, 204, 51));
         btnRegistar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -118,25 +114,13 @@ public class ViaturaFrm extends javax.swing.JDialog {
             }
         });
 
-        txtMarca.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtUsername.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-        txtModelo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
-        txtMatricula.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
-        txtTipo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel1.setText("Modelo");
+        lblSenha.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblSenha.setText("Senha / Palavra-passe");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("Marca");
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel3.setText("Matrícula");
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel4.setText("Tipo");
+        jLabel2.setText("Nome de Usuáro");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setText("ID:");
@@ -144,6 +128,18 @@ public class ViaturaFrm extends javax.swing.JDialog {
         txtId.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txtId.setForeground(new java.awt.Color(204, 0, 0));
         txtId.setText("Novo");
+
+        txtSenha.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtSenha.setText("ex");
+
+        txtSenha1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtSenha1.setText("ex");
+
+        lblSenha1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblSenha1.setText("Nova Senha / Palavra-passe");
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel7.setText("=");
 
         btnEliminar.setBackground(new java.awt.Color(204, 0, 0));
         btnEliminar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -159,72 +155,87 @@ public class ViaturaFrm extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(92, 92, 92)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addGap(54, 54, 54)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtId)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
+                        .addComponent(txtId))
+                    .addComponent(jLabel2)
+                    .addComponent(lblSenha)
+                    .addComponent(txtSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                    .addComponent(txtUsername))
+                .addGap(16, 16, 16)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtSenha1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSenha1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(btnAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnRegistar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addGap(186, 186, 186))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 6, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblSenha)
+                            .addComponent(lblSenha1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtSenha1)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtSenha)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnNovo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(btnRegistar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(btnAtualizar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+
+        jPanel2.setBackground(new java.awt.Color(0, 153, 51));
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Usuário");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addComponent(jLabel6)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel6)
                 .addContainerGap())
         );
 
@@ -234,13 +245,16 @@ public class ViaturaFrm extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -248,22 +262,34 @@ public class ViaturaFrm extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        if (!"Novo".equalsIgnoreCase(txtId.getText())) {
-            if (!txtMatricula.getText().equals("") && !txtModelo.getText().equals("") && !txtMarca.getText().equals("")) {
-                Viatura v = new Viatura(Integer.parseInt(txtId.getText()), txtMarca.getText(), txtModelo.getText(), txtMatricula.getText(), txtTipo.getText());
-                if (ViaturaDao.updade(v)) {
-                    JOptionPane.showMessageDialog(this, "Atualizado com Sucesso", "Sucesso", 1);
-                    refreshTb();
-                    novo();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Erro ao atualizar o registro", "ERRO", 0);
+        if(!"Novo".equalsIgnoreCase(txtId.getText())){
+            if(!txtUsername.getText().equals("") && txtSenha.getPassword().length > 0 && txtSenha1.getPassword().length > 0){
+                String senha = new String(txtSenha.getPassword());
+                String senha1 = new String(txtSenha1.getPassword());
+                
+                Usuario us = UsuarioDao.getById(Integer.parseInt(txtId.getText()));
+                if(senha.equals(us.getSenha())){
+                    
+                    us.setUserName(txtUsername.getText());
+                    us.setSenha(senha1);
+                    
+                    if(UsuarioDao.updade(us)){
+                        JOptionPane.showMessageDialog(this, "Atualizado com Sucesso","Sucesso", 1);
+                        refreshTb();
+                        novo();
+                    }else{
+                        JOptionPane.showMessageDialog(this, "Erro ao registrar","ERRO", 0);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(this, "Senha incorrecta","SENHA", 2);
+                    txtSenha1.requestFocus();
                 }
-            } else {
-                JOptionPane.showMessageDialog(this, "Preencha todos os campos", "Campos Vazios", 2);
-                txtMarca.requestFocus();
+            }else{
+                JOptionPane.showMessageDialog(this, "Preencha todos os campos","Campos Vazios", 2);
+                txtUsername.requestFocus();
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Não foi selecionado nenhum registro", "Sem Registro", 2);
+        }else{
+            JOptionPane.showMessageDialog(this, "Não foi selecionado nenhum registro","Sem Registro", 2);
         }
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
@@ -272,43 +298,48 @@ public class ViaturaFrm extends javax.swing.JDialog {
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnRegistarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistarActionPerformed
-        if (!txtMatricula.getText().equals("") && !txtModelo.getText().equals("") && !txtMarca.getText().equals("")) {
-            Viatura v = new Viatura(txtMarca.getText(), txtModelo.getText(), txtMatricula.getText(), txtTipo.getText());
-            if (ViaturaDao.cadastrar(v)) {
-                JOptionPane.showMessageDialog(this, "Registado com Sucesso", "Sucesso", 1);
-                refreshTb();
-                novo();
-            } else {
-                JOptionPane.showMessageDialog(this, "Erro ao registrar", "ERRO", 0);
+        if(!txtUsername.getText().equals("") && txtSenha.getPassword().length > 0 && txtSenha1.getPassword().length > 0){
+            String senha = new String(txtSenha.getPassword());
+            String senha1 = new String(txtSenha1.getPassword());
+            if(senha.equals(senha1)){
+                Usuario us = new Usuario(txtUsername.getText(), senha);
+                if(UsuarioDao.cadastrar(us)){
+                    JOptionPane.showMessageDialog(this, "Registado com Sucesso","Sucesso", 1);
+                    refreshTb();
+                    novo();
+                }else{
+                    JOptionPane.showMessageDialog(this, "Erro ao registrar","ERRO", 0);
+                }
+            }else{
+                JOptionPane.showMessageDialog(this, "As senhas inseridas não são iguais","SENHA", 2);
+                txtSenha1.requestFocus();
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Preencha todos os campos", "Campos Vazios", 2);
-            txtMarca.requestFocus();
+        }else{
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos","Campos Vazios", 2);
+            txtUsername.requestFocus();
         }
     }//GEN-LAST:event_btnRegistarActionPerformed
 
     private void tableDataMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDataMouseReleased
-        if (tableData.getSelectedRow() >= 0) {
-            Viatura v = modelo.getRow(tableData.getSelectedRow());
+        if(tableData.getSelectedRow() >= 0){
+            Usuario us = modelo.getRow(tableData.getSelectedRow());
             btnRegistar.setEnabled(false);
             btnAtualizar.setEnabled(true);
-            txtId.setText(v.getId() + "");
-            txtMarca.setText(v.getMarca());
-            txtModelo.setText(v.getModelo());
-            txtMatricula.setText(v.getMatricula());
-            txtTipo.setText(v.getTipo());
+            txtId.setText(us.getId()+"");
+            txtUsername.setText(us.getUserName());
+            txtSenha.setText(us.getSenha());
+            txtSenha1.setText(us.getSenha());
+            lblSenha.setText("Senha / Palavra-passe Atual");
+            lblSenha1.setText("Nova Senha / Palavra-passe");
         }
     }//GEN-LAST:event_tableDataMouseReleased
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         if (tableData.getSelectedRow() >= 0 && !txtId.getText().equalsIgnoreCase("Novo")) {
-            String msg ="Tem certeza que pretende eliminar este registro?"
-                    + "\nSe eliminar estara a eliminar outros"
-                    + "\ndados que estão relacionádo."
-                    + "\n\nAinda assim pretendes eliminar este registro?";
+            String msg ="Tem certeza que pretende eliminar este registro?";
             if (JOptionPane.showConfirmDialog(this, msg, "ELIMINAR", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
-                Viatura v = modelo.getRow(tableData.getSelectedRow());
-                if (ViaturaDao.delete(v)) {
+                Usuario u = modelo.getRow(tableData.getSelectedRow());
+                if (UsuarioDao.delete(u)) {
                     JOptionPane.showMessageDialog(this, "Registro eliminado", "ELIMINAR", 1);
                     refreshTb();
                 } else {
@@ -320,20 +351,18 @@ public class ViaturaFrm extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void refreshTb() {
-        this.modelo.setLista(ViaturaDao.findAll());
+    private void refreshTb(){
+        this.modelo.setLista(UsuarioDao.findAll());
     }
-
-    private void novo() {
+    
+    private void novo(){
         btnRegistar.setEnabled(true);
         btnAtualizar.setEnabled(false);
         txtId.setText("Novo");
-        txtMarca.setText("");
-        txtModelo.setText("");
-        txtMatricula.setText("");
-        txtTipo.setText("");
+        txtUsername.setText("");
+        lblSenha.setText("Senha / Palavra-passe");
+        lblSenha1.setText("Repita a Senha / Palavra-passe");
     }
-
     /**
      * @param args the command line arguments
      */
@@ -365,7 +394,7 @@ public class ViaturaFrm extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                ViaturaFrm dialog = new ViaturaFrm(new javax.swing.JFrame(), true);
+                UsuarioFrm dialog = new UsuarioFrm(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -382,19 +411,19 @@ public class ViaturaFrm extends javax.swing.JDialog {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnRegistar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblSenha;
+    private javax.swing.JLabel lblSenha1;
     private javax.swing.JTable tableData;
     private javax.swing.JLabel txtId;
-    private javax.swing.JTextField txtMarca;
-    private javax.swing.JTextField txtMatricula;
-    private javax.swing.JTextField txtModelo;
-    private javax.swing.JTextField txtTipo;
+    private javax.swing.JPasswordField txtSenha;
+    private javax.swing.JPasswordField txtSenha1;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

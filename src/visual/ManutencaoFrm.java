@@ -36,6 +36,7 @@ public class ManutencaoFrm extends javax.swing.JDialog {
 
         if (ViaturaDao.findAll().size() > 0) {
             cbViaturas.removeAllItems();
+            cbViaturas.removeAll();
             for (Viatura v : ViaturaDao.findAll()) {
                 cbViaturas.addItem(v);
             }
@@ -69,6 +70,7 @@ public class ManutencaoFrm extends javax.swing.JDialog {
         txtDescricao = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
         cbViaturas = new javax.swing.JComboBox<>();
+        btnEliminar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
 
@@ -146,6 +148,15 @@ public class ManutencaoFrm extends javax.swing.JDialog {
 
         cbViaturas.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
+        btnEliminar.setBackground(new java.awt.Color(204, 0, 0));
+        btnEliminar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -167,11 +178,12 @@ public class ManutencaoFrm extends javax.swing.JDialog {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(56, 56, 56)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnRegistar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(101, 101, 101))
+                    .addComponent(btnRegistar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(192, 192, 192))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,11 +193,12 @@ public class ManutencaoFrm extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btnNovo)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRegistar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnAtualizar)
-                        .addGap(19, 19, 19))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEliminar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
@@ -197,8 +210,8 @@ public class ManutencaoFrm extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbViaturas, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())))
+                            .addComponent(cbViaturas, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
 
         jPanel2.setBackground(new java.awt.Color(0, 153, 51));
@@ -228,9 +241,9 @@ public class ManutencaoFrm extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 769, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,7 +260,7 @@ public class ManutencaoFrm extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        if (!"Novo".equals(txtId.getText())) {
+        if (!"Novo".equalsIgnoreCase(txtId.getText())) {
             if (!txtDescricao.getText().equals("")) {
                 if (cbViaturas.getSelectedIndex() >= 0) {
 //                    java.sql.Date data = new java.sql.Date(new java.util.Date().getTime());
@@ -305,9 +318,31 @@ public class ManutencaoFrm extends javax.swing.JDialog {
             btnAtualizar.setEnabled(true);
             txtId.setText(mt.getId() + "");
             txtDescricao.setText(mt.getDescricao());
-            cbViaturas.setSelectedItem(mt.getViatura());
+            
+            int idx = ViaturaDao.findAll().indexOf(mt.getViatura());
+            cbViaturas.setSelectedIndex(idx);
         }
     }//GEN-LAST:event_tableDataMouseReleased
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        if (tableData.getSelectedRow() >= 0 && !txtId.getText().equalsIgnoreCase("Novo")) {
+            String msg ="Tem certeza que pretende eliminar este registro?"
+            + "\nSe eliminar estara a eliminar outros"
+            + "\ndados que estão relacionádo."
+            + "\n\nAinda assim pretendes eliminar este registro?";
+            if (JOptionPane.showConfirmDialog(this, msg, "ELIMINAR", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+                Manutencao mt = modelo.getRow(tableData.getSelectedRow());
+                if (ManutencaoDao.delete(mt)) {
+                    JOptionPane.showMessageDialog(this, "Registro eliminado", "ELIMINAR", 1);
+                    refreshTb();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao eliminar o registro", "ELIMINAR", 0);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um registro", "ELIMINAR", 2);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void refreshTb() {
         this.modelo.setLista(ManutencaoDao.findAll());
@@ -366,6 +401,7 @@ public class ManutencaoFrm extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnRegistar;
     private javax.swing.JComboBox<Viatura> cbViaturas;

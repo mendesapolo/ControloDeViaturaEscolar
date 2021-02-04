@@ -7,9 +7,11 @@ package visual;
 
 import classe.Motorista;
 import classe.Pessoa;
+import classe.Usuario;
 import classe.Viatura;
 import dao.MotoristaDao;
 import dao.PessoaDao;
+import dao.UsuarioDao;
 import dao.ViaturaDao;
 import javax.swing.JOptionPane;
 import table.MotoristaTb;
@@ -76,6 +78,7 @@ public class MotoristaFrm extends javax.swing.JDialog {
         cbViaturas = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         txtIdp = new javax.swing.JLabel();
+        btnEliminar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
 
@@ -161,6 +164,15 @@ public class MotoristaFrm extends javax.swing.JDialog {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Viatura");
 
+        btnEliminar.setBackground(new java.awt.Color(204, 0, 0));
+        btnEliminar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -181,7 +193,7 @@ public class MotoristaFrm extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtIdp))
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel3)
                             .addComponent(txtBi, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
@@ -190,12 +202,12 @@ public class MotoristaFrm extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(56, 56, 56)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnRegistar, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(101, 101, 101))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRegistar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(111, 111, 111))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,7 +221,9 @@ public class MotoristaFrm extends javax.swing.JDialog {
                         .addComponent(btnRegistar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnAtualizar)
-                        .addGap(19, 19, 19))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
@@ -283,7 +297,7 @@ public class MotoristaFrm extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        if (!"Novo".equals(txtId.getText()) && !txtIdp.getText().equals("")) {
+        if (!"Novo".equalsIgnoreCase(txtId.getText()) && !txtIdp.getText().equals("")) {
             if (!txtBi.getText().equals("") && !txtTelefone.getText().equals("") && !txtNome.getText().equals("")) {
                 if (cbViaturas.getSelectedIndex() >= 0) {
                     Pessoa p = new Pessoa(Integer.parseInt(txtIdp.getText()), txtNome.getText(), txtBi.getText(), txtTelefone.getText(), "motorista");
@@ -355,6 +369,23 @@ public class MotoristaFrm extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_tableDataMouseReleased
 
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        if (tableData.getSelectedRow() >= 0 && !txtId.getText().equalsIgnoreCase("Novo")) {
+            String msg ="Tem certeza que pretende eliminar este registro?";
+            if (JOptionPane.showConfirmDialog(this, msg, "ELIMINAR", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+                Motorista m = modelo.getRow(tableData.getSelectedRow());
+                if (MotoristaDao.delete(m)) {
+                    JOptionPane.showMessageDialog(this, "Registro eliminado", "ELIMINAR", 1);
+                    refreshTb();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao eliminar o registro", "ELIMINAR", 0);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um registro", "ELIMINAR", 2);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
     private void refreshTb() {
 //        List<Pessoa> ls = new ArrayList<>();
 //        for(Pessoa p : PessoaDao.findAll()){
@@ -421,6 +452,7 @@ public class MotoristaFrm extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnNovo;
     private javax.swing.JButton btnRegistar;
     private javax.swing.JComboBox<Viatura> cbViaturas;

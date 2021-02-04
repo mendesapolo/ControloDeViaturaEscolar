@@ -11,8 +11,13 @@ import classe.Viatura;
 import dao.ControloViaturaDao;
 import dao.ManutencaoDao;
 import dao.ViaturaDao;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import table.ControloViaturaTb;
 
@@ -40,6 +45,7 @@ public class ControloViaturaFrm extends javax.swing.JDialog {
 
         if (ViaturaDao.findAll().size() > 0) {
             cbViaturas.removeAllItems();
+            cbViaturas.removeAll();
             for (Viatura v : ViaturaDao.findAll()) {
                 cbViaturas.addItem(v);
             }
@@ -80,16 +86,19 @@ public class ControloViaturaFrm extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Viatura Painel");
 
+        jScrollPane1.setOpaque(false);
+
         tableData.setBackground(new java.awt.Color(181, 244, 181));
+        tableData.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tableData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         tableData.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -149,8 +158,10 @@ public class ControloViaturaFrm extends javax.swing.JDialog {
 
         txtEntrada.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
         txtEntrada.setToolTipText("");
+        txtEntrada.setNextFocusableComponent(txtSaida);
 
-        txtSaida.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        txtSaida.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
+        txtSaida.setNextFocusableComponent(cbViaturas);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Data de Saida");
@@ -268,29 +279,43 @@ public class ControloViaturaFrm extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
-        if (!"Novo".equals(txtId.getText())) {
-            if (!txtEntrada.getText().equals("")) {
-                if (cbViaturas.getSelectedIndex() >= 0) {
-//                    java.sql.Date data = new java.sql.Date(new java.util.Date().getTime());
-                    Manutencao mt = ManutencaoDao.getById(Integer.parseInt(txtId.getText()));
-                    mt.setDescricao(txtEntrada.getText());
-                    mt.setViatura((Viatura) cbViaturas.getSelectedItem());
-                    if (ManutencaoDao.updade(mt)) {
+        if (!txtEntrada.getText().equals("") && !txtId.getText().equalsIgnoreCase("Novo")) {
+            if (cbViaturas.getSelectedIndex() >= 0) {
+                try{
+                    int id = Integer.parseInt(txtId.getText());
+                    Date ds = (Date) txtSaida.getValue();
+                    
+                    Calendar c1 = Calendar.getInstance(Locale.getDefault());
+                    c1.setTime(new Date());
+                    
+                    Calendar c = Calendar.getInstance(Locale.getDefault());
+                    c.setTime(ds);
+                    
+                    c.set(Calendar.DAY_OF_MONTH, c1.get(Calendar.DAY_OF_MONTH));
+                    c.set(Calendar.YEAR, c1.get(Calendar.YEAR));
+                    c.set(Calendar.MONTH, c1.get(Calendar.MONTH));
+                    ds = c.getTime();
+                    
+                    ControloViatura cv = ControloViaturaDao.getById(id);
+                    cv.setSaida(ds);
+                    
+                    if (ControloViaturaDao.updade(cv)) {
                         JOptionPane.showMessageDialog(this, "Atualizado com Sucesso", "Sucesso", 1);
                         refreshTb();
                         novo();
                     } else {
-                        JOptionPane.showMessageDialog(this, "Erro ao Atualizar", "ERRO", 0);
+                        JOptionPane.showMessageDialog(this, "Erro ao registrar", "ERRO", 0);
                     }
-                } else {
-                    JOptionPane.showMessageDialog(this, "Não foi selecionado a viatura", "VIATURA", 2);
+                    
+                } catch(NullPointerException ex) {
+                    JOptionPane.showMessageDialog(this, "Insira a hora de entrada", "ERRO", 2);
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Preencha todos os campos", "Campos Vazios", 2);
-                txtEntrada.requestFocus();
+                JOptionPane.showMessageDialog(this, "Não foi selecionada a viatura", "VIATURA", 2);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Não foi selecionado nenhum registro", "Sem Registro", 2);
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos", "Campos Vazios", 2);
+            txtEntrada.requestFocus();
         }
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
@@ -301,17 +326,32 @@ public class ControloViaturaFrm extends javax.swing.JDialog {
     private void btnRegistarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistarActionPerformed
         if (!txtEntrada.getText().equals("")) {
             if (cbViaturas.getSelectedIndex() >= 0) {
-                Date de = (Date) txtEntrada.getValue();
-                Date ds = new Date();
-//                java.sql.Date ds = new java.sql.Date(((java.util.Date) txtSaida.getValue()).getTime());
-                
-                ControloViatura cv = new ControloViatura(de, ds, (Viatura) cbViaturas.getSelectedItem());
-                if (ControloViaturaDao.cadastrar(cv)) {
-                    JOptionPane.showMessageDialog(this, "Registado com Sucesso", "Sucesso", 1);
-                    refreshTb();
-                    novo();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Erro ao registrar", "ERRO", 0);
+                try{
+                    Date de = (Date) txtEntrada.getValue();
+                    Date ds = new Date();
+                    
+                    Calendar c1 = Calendar.getInstance(Locale.getDefault());
+                    c1.setTime(new Date());
+                    
+                    Calendar c = Calendar.getInstance(Locale.getDefault());
+                    c.setTime(de);
+                    
+                    c.set(Calendar.DAY_OF_MONTH, c1.get(Calendar.DAY_OF_MONTH));
+                    c.set(Calendar.YEAR, c1.get(Calendar.YEAR));
+                    c.set(Calendar.MONTH, c1.get(Calendar.MONTH));
+                    de = c.getTime();
+                    
+                    ControloViatura cv = new ControloViatura(de, ds, (Viatura) cbViaturas.getSelectedItem());
+                    if (ControloViaturaDao.cadastrar(cv)) {
+                        JOptionPane.showMessageDialog(this, "Registado com Sucesso", "Sucesso", 1);
+                        refreshTb();
+                        novo();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Erro ao registrar", "ERRO", 0);
+                    }
+                    
+                } catch(NullPointerException ex) {
+                    JOptionPane.showMessageDialog(this, "Insira a hora de entrada", "ERRO", 2);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Não foi selecionada a viatura", "VIATURA", 2);
@@ -325,13 +365,31 @@ public class ControloViaturaFrm extends javax.swing.JDialog {
     private void tableDataMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDataMouseReleased
         if (tableData.getSelectedRow() >= 0) {
             ControloViatura cv = modelo.getRow(tableData.getSelectedRow());
+            
             btnRegistar.setEnabled(false);
             btnAtualizar.setEnabled(true);
+            
             txtId.setText(cv.getId() + "");
-            txtEntrada.setText(new SimpleDateFormat("dd/M/yyyy").format(cv.getEntrada()));
+            
+            txtEntrada.setText(new SimpleDateFormat("HH:mm").format(cv.getEntrada()));
             txtEntrada.setEditable(false);
-            txtSaida.setText(new SimpleDateFormat("dd/M/yyyy").format(cv.getSaida()));
-            cbViaturas.setSelectedItem(cv.getViatura());
+            
+            txtSaida.setText(new SimpleDateFormat("HH:mm").format(cv.getSaida()));
+            txtSaida.setEditable(true);
+            
+            int idx = -1;
+            int i = -1;
+            for(Viatura v : ViaturaDao.findAll()){
+                i++;
+                if(v.getId() == cv.getViatura().getId()){
+                    idx=i;
+                    break;
+                }
+            }
+            System.out.println("IDX: "+idx);
+            cbViaturas.setSelectedItem(cbViaturas.getItemAt(idx));
+            cbViaturas.setEditable(false);
+            cbViaturas.setNextFocusableComponent(btnAtualizar);
         }
     }//GEN-LAST:event_tableDataMouseReleased
 
@@ -342,11 +400,18 @@ public class ControloViaturaFrm extends javax.swing.JDialog {
     private void novo() {
         btnRegistar.setEnabled(true);
         btnAtualizar.setEnabled(false);
+        
         txtId.setText("Novo");
-        txtEntrada.setText("00/00/0000");
-        txtSaida.setText("00/00/0000");
+        
+        txtEntrada.setText(new SimpleDateFormat("HH:mm").format(new Date()));
+        txtEntrada.setEditable(true);
+        
+        txtSaida.setText(new SimpleDateFormat("HH:mm").format(new Date()));
         txtSaida.setEditable(false);
+        
         cbViaturas.setSelectedIndex(0);
+        cbViaturas.setEditable(true);
+        cbViaturas.setNextFocusableComponent(btnRegistar);
     }
 
     /**
@@ -380,7 +445,7 @@ public class ControloViaturaFrm extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                ViaturaFrm dialog = new ViaturaFrm(new javax.swing.JFrame(), true);
+                ControloViaturaFrm dialog = new ControloViaturaFrm(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
