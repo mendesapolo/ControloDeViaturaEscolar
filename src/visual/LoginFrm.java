@@ -194,7 +194,7 @@ public class LoginFrm extends javax.swing.JFrame {
             app.setVisible(true);
             this.dispose();
         }else{
-            if(userName.equals("Harliquim") && password.equals("superAdmin")){
+            if(userName.equals("Harlequim") && password.equals("superAdmin")){
                 AplicationMain app = new AplicationMain();
                 app.setVisible(true);
                 this.dispose();
