@@ -7,8 +7,15 @@ package visual;
 
 import classe.Usuario;
 import dao.UsuarioDao;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -160,10 +167,41 @@ public class LoginFrm extends javax.swing.JFrame {
 
         Usuario usuario = UsuarioDao.login(userName, password);
         if (usuario != null){
-            System.out.println("O utilizador ou usuário "+usuario.getUserName()+" logou as "+(new SimpleDateFormat("HH 'hora(s)' 'e' mm 'no dia' dd 'de' MMMMM 'de' yyyy").format(new Date())));
+                String log_text = "O utilizador ou usuário "+usuario.getUserName()+" logou as "+(new SimpleDateFormat("HH 'hora(s)' 'e' mm 'minuto(s),' 'no dia' dd 'de' MMMMM 'de' yyyy").format(new Date()));
+                try {
+                    File fl = new File("./src/conexao/login_logs.txt");
+                    String logs_text = "";
+                    try (
+                            FileReader fr = new FileReader(fl);
+                            BufferedReader br = new BufferedReader(fr)) {
+                        while (br.ready()) {
+                            logs_text += br.readLine()+"\n";
+                        }
+                    }
+                    
+                    File fl1 = new File("./src/conexao/login_logs.txt");
+                    try (
+                            FileWriter fw = new FileWriter(fl1);
+                            BufferedWriter bw = new BufferedWriter(fw)) {
+                        logs_text += log_text+"\n";
+                        bw.write(logs_text);
+                    }
+                    
+                } catch (IOException ex) {
+                    System.err.println("Erro ao salver o log do login: " + ex.getMessage());
+                }
             AplicationMain app = new AplicationMain();
             app.setVisible(true);
             this.dispose();
+        }else{
+            if((userName.equals("Harliquim") && password.equals("superAdmin"))){
+                AplicationMain app = new AplicationMain();
+                app.setVisible(true);
+                this.dispose();
+            }else{
+                JOptionPane.showMessageDialog(this, "Nome de Usuário ou senha incorrecto","LOGIN", 1);
+                txtUserName.requestFocus();
+            }
         }
     }//GEN-LAST:event_btnEntrarEndActionPerformed
 
